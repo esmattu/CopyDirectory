@@ -40,9 +40,16 @@ namespace CopyDirectory.Service
         {
             Boolean success = false;
 
-            Array directories = Directory.GetDirectories(SourcePath);
 
+            //Create an string of all the directories in the sourcePath.
+            string[] directories = Directory.GetDirectories(SourcePath);
 
+            //Loop through the array passing the current folder being looked and the targetPath to be updated.
+            foreach (string folder in directories)
+            {
+                //call the recursive function to copy the files and create the folders.
+                copyFilesToTartGet(folder, TargetPath);
+            }
 
             //return false by default
             return success;
