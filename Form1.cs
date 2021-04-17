@@ -51,5 +51,10 @@ namespace CopyDirectory
                 MessageBox.Show("Files have been copied over");
             }
         }
+
+        private void FileCopyProgessBar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
