@@ -68,7 +68,7 @@ namespace CopyDirectory.Service
                 foreach (string directory in Directory.GetDirectories(currentDirectoryPath))
                 {
 
-                    var string newTargetPath = directory.Replace(currentDirectoryPath, TargetPath);
+                    string newTargetPath = directory.Replace(currentDirectoryPath, TargetPath);
                                         
                     //we've found another directory so call this function again to get the files.
                     copyFilesToTartGet(directory);
