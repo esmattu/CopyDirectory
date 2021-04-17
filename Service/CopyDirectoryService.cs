@@ -19,7 +19,7 @@ namespace CopyDirectory.Service
         private string TargetPath { get; set; }
 
         //we need to know the current Directory.
-        private string CurrentDirectoryPath { get; set; }
+/*        private string CurrentDirectoryPath { get; set; }*/
 
 
         /// <summary>
@@ -53,25 +53,40 @@ namespace CopyDirectory.Service
         /// If there a no more files or directories to loop return true.
         /// </summary>
         /// <param name="directoryPath"></param>
-        private Boolean copyFilesToTartGet(string currentDirectoryPath)
+        private Boolean copyFilesToTartGet(string currentDirectoryPath, string targetPath)
         {
             try
             {
-                //update what directory we are looking at
-                CurrentDirectoryPath = currentDirectoryPath;
-                foreach (string file in Directory.GetFiles(currentDirectoryPath))
+                //update what directory we are looking at and the deatils for that folder
+                DirectoryInfo currentDirectory = new DirectoryInfo(currentDirectoryPath);
+
+
+
+                //Get all the subDirectories, if any in the current Directory as array of DirectoryInfo
+                DirectoryInfo[] subDirectories = currentDirectory.GetDirectories();
+
+                //Create the targetPath directory, it doesn't exisit. The method won't overwrite if it does. 
+                Directory.CreateDirectory(targetPath);
+
+                //Get all the files in that folder as FileInfo array to loop through
+                FileInfo[] folderFiles = currentDirectory.GetFiles();
+                foreach (FileInfo filePath in folderFiles)
                 {
-                    
-                    //CopyCurrentFile(file);
+                    //merge the currentDirectry and the file current file name.
+                    string tempPath = Path.Combine(currentDirectoryPath, filePath.Name);
+                    //Don't overwite if it exisits
+                    filePath.CopyTo(tempPath, false);
                 }
 
-                foreach (string directory in Directory.GetDirectories(currentDirectoryPath))
+                //Try loop through any directories in the current folder.
+                foreach (DirectoryInfo folder in subDirectories)
                 {
 
-                    string newTargetPath = directory.Replace(currentDirectoryPath, TargetPath);
-                                        
-                    //we've found another directory so call this function again to get the files.
-                    copyFilesToTartGet(directory);
+                    
+                    //we found a new folder, we need to update the targetPath with new folder name so it can be created.
+                     
+                    string tempPath = Path.Combine(targetPath, folder.Name);
+                    copyFilesToTartGet(folder.FullName, tempPath);
                 }
 
                 //once there are no directories to files to copy is should return true
@@ -84,11 +99,6 @@ namespace CopyDirectory.Service
                 return false;
             }
 
-        }
-
-        private void CopyCurrentFile (string filePath, string currentDirecorty)
-        {
-            
         }
 
     }
