@@ -36,7 +36,7 @@ namespace CopyDirectory
         {
             if(TargetFolderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                TargetFolder = SourceFolderBrowserDialog.SelectedPath;
+                TargetFolder = TargetFolderBrowserDialog.SelectedPath;
             } 
         }
 
@@ -44,8 +44,12 @@ namespace CopyDirectory
         {
 
             CopyDirectoryService copyDirectory = new(SourceFolder, TargetFolder);
-            copyDirectory.StartCopy();
-
+            var result = copyDirectory.StartCopy();
+            
+            if(result == true)
+            {
+                MessageBox.Show("Files have been copied over");
+            }
         }
     }
 }

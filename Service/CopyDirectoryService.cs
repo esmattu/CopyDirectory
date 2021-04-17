@@ -39,16 +39,18 @@ namespace CopyDirectory.Service
         public Boolean StartCopy()
         {
             Boolean success = false;
-
-
+            
             //Create an string of all the directories in the sourcePath.
-            string[] directories = Directory.GetDirectories(SourcePath);
+            DirectoryInfo sourceDireactory = new DirectoryInfo(SourcePath);
+
+            DirectoryInfo[] directories = sourceDireactory.GetDirectories();
 
             //Loop through the array passing the current folder being looked and the targetPath to be updated.
-            foreach (string folder in directories)
+            foreach (DirectoryInfo folder in directories)
             {
                 //call the recursive function to copy the files and create the folders.
-                copyFilesToTartGet(folder, TargetPath);
+                copyFilesToTartGet(folder.FullName, TargetPath);
+
             }
 
             //return false by default
@@ -62,49 +64,39 @@ namespace CopyDirectory.Service
         /// <param name="directoryPath"></param>
         private Boolean copyFilesToTartGet(string currentDirectoryPath, string targetPath)
         {
-            try
+
+            //update what directory we are looking at and the deatils for that folder
+            DirectoryInfo currentDirectory = new DirectoryInfo(currentDirectoryPath);
+
+
+
+            //Get all the subDirectories, if any in the current Directory as array of DirectoryInfo
+            DirectoryInfo[] subDirectories = currentDirectory.GetDirectories();
+
+            //Create the targetPath directory, it doesn't exisit. The method won't overwrite if it does. 
+            Directory.CreateDirectory(targetPath);
+
+            //Get all the files in that folder as FileInfo array to loop through
+            FileInfo[] folderFiles = currentDirectory.GetFiles();
+            foreach (FileInfo filePath in folderFiles)
             {
-                //update what directory we are looking at and the deatils for that folder
-                DirectoryInfo currentDirectory = new DirectoryInfo(currentDirectoryPath);
-
-
-
-                //Get all the subDirectories, if any in the current Directory as array of DirectoryInfo
-                DirectoryInfo[] subDirectories = currentDirectory.GetDirectories();
-
-                //Create the targetPath directory, it doesn't exisit. The method won't overwrite if it does. 
-                Directory.CreateDirectory(targetPath);
-
-                //Get all the files in that folder as FileInfo array to loop through
-                FileInfo[] folderFiles = currentDirectory.GetFiles();
-                foreach (FileInfo filePath in folderFiles)
-                {
-                    //merge the currentDirectry and the file current file name.
-                    string tempPath = Path.Combine(currentDirectoryPath, filePath.Name);
-                    //Don't overwite if it exisits
-                    filePath.CopyTo(tempPath, false);
-                }
-
-                //Try loop through any directories in the current folder.
-                foreach (DirectoryInfo folder in subDirectories)
-                {
-
-                    
-                    //we found a new folder, we need to update the targetPath with new folder name so it can be created.
-                     
-                    string tempPath = Path.Combine(targetPath, folder.Name);
-                    copyFilesToTartGet(folder.FullName, tempPath);
-                }
-
-                //once there are no directories to files to copy is should return true
-                return true;
-
+                //merge the currentDirectry and the file current file name.
+                string tempPath = Path.Combine(targetPath, filePath.Name);
+                //Don't overwite if it exisits
+                filePath.CopyTo(tempPath, false);
             }
-            catch (System.Exception exception)
+
+            //Try loop through any directories in the current folder.
+            foreach (DirectoryInfo folder in subDirectories)
             {
-                //TODO This requires a way to record errors or have a way to return this issue back to the UI
-                return false;
+
+                //we found a new folder, we need to update the targetPath with new folder name so it can be created.
+                string tempPath = Path.Combine(targetPath, folder.Name);
+                copyFilesToTartGet(folder.FullName, tempPath);
             }
+
+            //once there are no directories to files to copy is should return true
+            return true;
 
         }
 
