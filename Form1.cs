@@ -12,7 +12,7 @@ using CopyDirectory.Service;
 namespace CopyDirectory
 {
 
-   
+
     public partial class CopyDirectory : Form
     {
         public CopyDirectory()
@@ -26,18 +26,18 @@ namespace CopyDirectory
 
         private void SelectSourceDirectoryButton_Click(object sender, EventArgs e)
         {
-            if(SourceFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (SourceFolderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                 SourceFolder = SourceFolderBrowserDialog.SelectedPath;
+                SourceFolder = SourceFolderBrowserDialog.SelectedPath;
             }
         }
 
         private void SelectTargetDirectoryButton_Click(object sender, EventArgs e)
         {
-            if(TargetFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (TargetFolderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
                 TargetFolder = TargetFolderBrowserDialog.SelectedPath;
-            } 
+            }
         }
 
         private void StartCopyDirectory_Click(object sender, EventArgs e)
@@ -45,16 +45,11 @@ namespace CopyDirectory
 
             CopyDirectoryService copyDirectory = new(SourceFolder, TargetFolder);
             var result = copyDirectory.StartCopy();
-            
-            if(result == true)
+
+            if (result == true)
             {
                 MessageBox.Show("Files have been copied over");
             }
-        }
-
-        private void FileCopyProgessBar_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

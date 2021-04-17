@@ -93,7 +93,7 @@ namespace CopyDirectory
             this.FileCopyProgessBar.Name = "FileCopyProgessBar";
             this.FileCopyProgessBar.Size = new System.Drawing.Size(756, 46);
             this.FileCopyProgessBar.TabIndex = 0;
-            this.FileCopyProgessBar.Click += new System.EventHandler(this.FileCopyProgessBar_Click);
+
             // 
             // CopyProgressLabel
             // 
