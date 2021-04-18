@@ -36,9 +36,9 @@ namespace CopyDirectory.Service
         /// This method will be used to the start the copy process
         /// </summary>
         /// <returns></returns>
-        public Boolean StartCopy()
+        public bool StartCopy()
         {
-            Boolean success = false;
+            bool success = false;
 
             //Create an string of all the directories in the sourcePath.
             DirectoryInfo sourceDireactory = new DirectoryInfo(SourcePath);
@@ -62,7 +62,7 @@ namespace CopyDirectory.Service
         /// If there a no more files or directories to loop return true.
         /// </summary>
         /// <param name="directoryPath"></param>
-        private Boolean copyFilesToTartGet(string currentDirectoryPath, string targetPath)
+        private bool copyFilesToTartGet(string currentDirectoryPath, string targetPath)
         {
 
             //update what directory we are looking at and the deatils for that folder
