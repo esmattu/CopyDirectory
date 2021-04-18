@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CopyDirectory": {
+      "commandName": "Project",
+      "workingDirectory": "S:\\eish0\\Documents\\Coding Stuff\\Dot Net Coding\\CopyDirectory\\CopyDirectory"
+    }
+  }
+}

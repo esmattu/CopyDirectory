@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CopyDirectory.Observer;
 
 namespace CopyDirectory.Service
 {
     class CopyDirectoryService
     {
-
+        //Use the event handler to return the process of the file transfer progress
+        public event EventHandler<string[]> FileTransferEvent;
 
         /// <summary>
         /// Set both to private to avoid them being overwritten by another class
@@ -18,7 +20,7 @@ namespace CopyDirectory.Service
 
         private string TargetPath { get; set; }
 
-        private int FileFolderCount { get; set; }
+        public int SourceFileFolderCount { get; set; }
 
         /// <summary>
         /// Class constructor requires that sourcePath and targetPath has been added when the class object is created.
@@ -38,7 +40,7 @@ namespace CopyDirectory.Service
         {
 
             //Get get a count what is to be transffered.
-            FileFolderCount = Directory.GetFiles("path/to/dir", "*.*", SearchOption.AllDirectories).Length;
+            SourceFileFolderCount = Directory.GetFiles(SourcePath, "*.*", SearchOption.AllDirectories).Length;
 
             //Create an string of all the directories in the sourcePath.
             DirectoryInfo sourceDireactory = new(SourcePath);
@@ -50,8 +52,14 @@ namespace CopyDirectory.Service
             {
                 //call the recursive function to copy the files and create the folders.
                 CopyFilesToTartGet(folder.FullName, TargetPath);
-
+                
             }
+
+            //grab al the files transferred over.
+            string[] targetSourceContentsArray = Directory.GetFiles(TargetPath, "*.*", SearchOption.AllDirectories);
+
+            //This to what ever class is listening to the event
+            FileTransferEvent?.Invoke(this, targetSourceContentsArray);
 
             //return false by default
             return true;
@@ -75,7 +83,7 @@ namespace CopyDirectory.Service
 
             //Create the targetPath directory, it doesn't exisit. The method won't overwrite if it does. 
             Directory.CreateDirectory(targetPath);
-
+            
             //Get all the files in that folder as FileInfo array to loop through
             FileInfo[] folderFiles = currentDirectory.GetFiles();
             foreach (FileInfo filePath in folderFiles)
@@ -84,6 +92,7 @@ namespace CopyDirectory.Service
                 string tempPath = Path.Combine(targetPath, filePath.Name);
                 //Don't overwite if it exisits
                 filePath.CopyTo(tempPath, true);
+                
             }
 
             //Try loop through any directories in the current folder.
@@ -100,10 +109,6 @@ namespace CopyDirectory.Service
 
         }
 
-        private void updateTranseferEvent(string fileTransferred)
-        {
-
-        }
 
     }
 }

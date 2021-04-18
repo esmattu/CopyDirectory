@@ -18,6 +18,7 @@ namespace CopyDirectory
         public CopyDirectory()
         {
             InitializeComponent();
+            
         }
 
         public string SourceFolder { get; set; }
@@ -44,14 +45,27 @@ namespace CopyDirectory
         {
 
             CopyDirectoryService copyDirectory = new(SourceFolder, TargetFolder);
+            copyDirectory.FileTransferEvent += CopyDirectory_FileTransferEvent;
+
             var result = copyDirectory.StartCopy();
 
-            if (result == true)
-            {
-                MessageBox.Show("Files have been copied over");
-            }
+
+
+
         }
 
+        //update the text box with the new list of copied files and folders
+        private void CopyDirectory_FileTransferEvent(object sender, string[] e)
+        {   
+            //clear the current text box and the new files
+            FilesCopiedTextBox.Text = null;
 
+            foreach(string line in e)
+            {
+                FilesCopiedTextBox.Text += line + Environment.NewLine;
+            }
+
+            FilesCopiedTextBox.Text += "All Files transffered!" + Environment.NewLine;
+        }
     }
 }

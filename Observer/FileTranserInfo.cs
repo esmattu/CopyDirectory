@@ -1,19 +1,20 @@
-﻿namespace CopyDirectory.Observer
+﻿using System.Collections.Generic;
+
+namespace CopyDirectory.Observer
 
 {
     public struct FileTranserInfo
     {
 
-        private string fileCopied;
-        private float percentageComplete;
-        
-        public FileTranserInfo(string fileCopied, float transferPercentage)
+/*        private List<string> fileCopied = new List<string>();
+                
+        public FileTranserInfo(string fileCopied)
         {
-            this.fileCopied = fileCopied;
-            this.percentageComplete = transferPercentage;
+            
+
         }
 
-        public string FileCopied { get { return this.fileCopied; }  }
-        public float PercentageCompleted { get { return this.percentageComplete; }  }
+        public List<string> FileCopied { get { return fileCopied; }  }*/
+
     }
 }
