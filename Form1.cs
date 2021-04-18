@@ -46,6 +46,12 @@ namespace CopyDirectory
         private void StartCopyDirectory_Click(object sender, EventArgs e)
         {
 
+            //Clear UI
+            ProgressPercentLabel.Text = "0%";
+            FileTransferProgressBar.Value = 0;
+            FilesToCopyTextBox.Text = null;
+            FilesCopiedTextBox.Text = null;
+
             int sourceCount = Directory.GetFiles(SourceFolder, "*.*", SearchOption.AllDirectories).Length;
             SourceFileFolderCount = sourceCount;
             FileTransferProgressBar.Maximum = sourceCount;
@@ -69,8 +75,9 @@ namespace CopyDirectory
 
             //calulate percentage, update percentage label
 
-            int currentPercentage = (SourceFileFolderCount / 100) * e.CopiedCount;
+            float currentPercentage = (SourceFileFolderCount / e.CopiedCount) * 100 ;
             FileTransferProgressBar.Value = e.CopiedCount;
+            FileTransferProgressBar.
             ProgressPercentLabel.Text = currentPercentage+"%";
 
         }

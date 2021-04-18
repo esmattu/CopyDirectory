@@ -63,19 +63,20 @@ namespace CopyDirectory
             // 
             // ProgressPercentLabel
             // 
-            this.ProgressPercentLabel.AutoSize = true;
             this.ProgressPercentLabel.BackColor = System.Drawing.Color.Transparent;
-            this.ProgressPercentLabel.Location = new System.Drawing.Point(400, 95);
+            this.ProgressPercentLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ProgressPercentLabel.Location = new System.Drawing.Point(577, 77);
             this.ProgressPercentLabel.Name = "ProgressPercentLabel";
-            this.ProgressPercentLabel.Size = new System.Drawing.Size(32, 21);
+            this.ProgressPercentLabel.Size = new System.Drawing.Size(191, 57);
             this.ProgressPercentLabel.TabIndex = 8;
             this.ProgressPercentLabel.Text = "0%";
+            this.ProgressPercentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FileTransferProgressBar
             // 
             this.FileTransferProgressBar.Location = new System.Drawing.Point(12, 77);
             this.FileTransferProgressBar.Name = "FileTransferProgressBar";
-            this.FileTransferProgressBar.Size = new System.Drawing.Size(756, 57);
+            this.FileTransferProgressBar.Size = new System.Drawing.Size(559, 57);
             this.FileTransferProgressBar.TabIndex = 7;
             // 
             // ToCopyLabel
