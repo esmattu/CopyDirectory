@@ -52,7 +52,7 @@ namespace CopyDirectory.Service
             {
                 //call the recursive function to copy the files and create the folders.
                 
-                CopyFilesToTartGet(folder.FullName, TargetPath);
+                CopyFilesToTarget(folder.FullName, TargetPath);
                 
             }
 
@@ -65,7 +65,7 @@ namespace CopyDirectory.Service
         /// If there a no more files or directories to loop return true.
         /// </summary>
         /// <param name="directoryPath"></param>
-        private bool CopyFilesToTartGet(string currentDirectoryPath, string targetPath)
+        private bool CopyFilesToTarget(string currentDirectoryPath, string targetPath)
         {
 
             //update what directory we are looking at and the deatils for that folder
@@ -102,7 +102,7 @@ namespace CopyDirectory.Service
 
                 //we found a new folder, we need to update the targetPath with new folder name so it can be created.
                 string tempPath = Path.Combine(targetPath, folder.Name);
-                CopyFilesToTartGet(folder.FullName, tempPath);
+                CopyFilesToTarget(folder.FullName, tempPath);
             }
 
             //once there are no directories to files to copy is should return true
