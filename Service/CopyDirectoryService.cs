@@ -41,7 +41,7 @@ namespace CopyDirectory.Service
             bool success = false;
 
             //Create an string of all the directories in the sourcePath.
-            DirectoryInfo sourceDireactory = new DirectoryInfo(SourcePath);
+            DirectoryInfo sourceDireactory = new(SourcePath);
 
             DirectoryInfo[] directories = sourceDireactory.GetDirectories();
 
@@ -49,7 +49,7 @@ namespace CopyDirectory.Service
             foreach (DirectoryInfo folder in directories)
             {
                 //call the recursive function to copy the files and create the folders.
-                copyFilesToTartGet(folder.FullName, TargetPath);
+                CopyFilesToTartGet(folder.FullName, TargetPath);
 
             }
 
@@ -62,11 +62,11 @@ namespace CopyDirectory.Service
         /// If there a no more files or directories to loop return true.
         /// </summary>
         /// <param name="directoryPath"></param>
-        private bool copyFilesToTartGet(string currentDirectoryPath, string targetPath)
+        private bool CopyFilesToTartGet(string currentDirectoryPath, string targetPath)
         {
 
             //update what directory we are looking at and the deatils for that folder
-            DirectoryInfo currentDirectory = new DirectoryInfo(currentDirectoryPath);
+            DirectoryInfo currentDirectory = new(currentDirectoryPath);
 
 
 
@@ -92,7 +92,7 @@ namespace CopyDirectory.Service
 
                 //we found a new folder, we need to update the targetPath with new folder name so it can be created.
                 string tempPath = Path.Combine(targetPath, folder.Name);
-                copyFilesToTartGet(folder.FullName, tempPath);
+                CopyFilesToTartGet(folder.FullName, tempPath);
             }
 
             //once there are no directories to files to copy is should return true
