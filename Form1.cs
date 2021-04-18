@@ -63,14 +63,15 @@ namespace CopyDirectory
             //copy the contents of the text boxes
             string currentToCopyTextBox = FilesToCopyTextBox.Text;
             string currentFilesCopiedTextBox = FilesCopiedTextBox.Text;
-                        
-            FilesCopiedTextBox.Text = currentToCopyTextBox + Environment.NewLine;
-            FilesCopiedTextBox.Text = currentFilesCopiedTextBox + Environment.NewLine;
+
+            FilesToCopyTextBox.Text = currentToCopyTextBox+ e.FileToCopy + Environment.NewLine;
+            FilesCopiedTextBox.Text = currentFilesCopiedTextBox + e.FileCopied+ Environment.NewLine;
 
             //calulate percentage, update percentage label
 
             int currentPercentage = (SourceFileFolderCount / 100) * e.CopiedCount;
             FileTransferProgressBar.Value = e.CopiedCount;
+            ProgressPercentLabel.Text = currentPercentage+"%";
 
         }
 

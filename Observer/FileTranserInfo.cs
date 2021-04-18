@@ -10,7 +10,7 @@ namespace CopyDirectory.Observer
         private string _fileToCopy;
         private int _copiedCount;
                 
-        public FileTranserInfo(string fileCopied, string fileToCopy, int copiedCount)
+        public FileTranserInfo(string fileToCopy, string fileCopied, int copiedCount)
         {
             _fileCopied = fileCopied;
             _fileToCopy = fileToCopy;

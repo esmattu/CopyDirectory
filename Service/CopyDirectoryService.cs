@@ -84,9 +84,12 @@ namespace CopyDirectory.Service
             {
                 //merge the currentDirectry and the file current file name.
                 string tempPath = Path.Combine(targetPath, filePath.Name);
-                //Don't overwite if it exisits
+
+                //File has been set allow the overwritting of files, it causing the app to crash.
                 filePath.CopyTo(tempPath, true);
-                
+
+                //update the UI with the file that has been transferred.
+                SendEvent(filePath.FullName, tempPath);
             }
 
             //Try loop through any directories in the current folder.
@@ -105,7 +108,6 @@ namespace CopyDirectory.Service
 
         private void SendEvent(string sourceFile, string targetFile)
         {
-
             int tartgetCount = Directory.GetFiles(TargetPath, "*.*", SearchOption.AllDirectories).Length;
 
             FileTranserInfo fileTranserInfo = new(sourceFile, targetFile, tartgetCount);
