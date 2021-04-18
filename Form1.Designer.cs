@@ -30,19 +30,27 @@ namespace CopyDirectory
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.FileTransferProgressBar = new System.Windows.Forms.ProgressBar();
             this.FilesCopiedLabel = new System.Windows.Forms.Label();
+            this.FilesToCopyTextBox = new System.Windows.Forms.TextBox();
             this.FilesCopiedTextBox = new System.Windows.Forms.TextBox();
             this.StartCopyDirectory = new System.Windows.Forms.Button();
             this.SelectTargetDirectoryButton = new System.Windows.Forms.Button();
             this.SelectSourceDirectoryButton = new System.Windows.Forms.Button();
             this.SourceFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.TargetFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.ToCopyLabel = new System.Windows.Forms.Label();
+            this.ProgressPercentLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.ProgressPercentLabel);
+            this.panel1.Controls.Add(this.FileTransferProgressBar);
+            this.panel1.Controls.Add(this.ToCopyLabel);
             this.panel1.Controls.Add(this.FilesCopiedLabel);
+            this.panel1.Controls.Add(this.FilesToCopyTextBox);
             this.panel1.Controls.Add(this.FilesCopiedTextBox);
             this.panel1.Controls.Add(this.StartCopyDirectory);
             this.panel1.Controls.Add(this.SelectTargetDirectoryButton);
@@ -53,22 +61,38 @@ namespace CopyDirectory
             this.panel1.Size = new System.Drawing.Size(780, 557);
             this.panel1.TabIndex = 0;
             // 
+            // FileTransferProgressBar
+            // 
+            this.FileTransferProgressBar.Location = new System.Drawing.Point(12, 77);
+            this.FileTransferProgressBar.Name = "FileTransferProgressBar";
+            this.FileTransferProgressBar.Size = new System.Drawing.Size(756, 57);
+            this.FileTransferProgressBar.TabIndex = 7;
+            // 
             // FilesCopiedLabel
             // 
             this.FilesCopiedLabel.AutoSize = true;
-            this.FilesCopiedLabel.Location = new System.Drawing.Point(12, 74);
+            this.FilesCopiedLabel.Location = new System.Drawing.Point(373, 165);
             this.FilesCopiedLabel.Name = "FilesCopiedLabel";
             this.FilesCopiedLabel.Size = new System.Drawing.Size(94, 21);
             this.FilesCopiedLabel.TabIndex = 6;
             this.FilesCopiedLabel.Text = "Files Copied";
             // 
+            // FilesToCopyTextBox
+            // 
+            this.FilesToCopyTextBox.Location = new System.Drawing.Point(12, 189);
+            this.FilesToCopyTextBox.Multiline = true;
+            this.FilesToCopyTextBox.Name = "FilesToCopyTextBox";
+            this.FilesToCopyTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.FilesToCopyTextBox.Size = new System.Drawing.Size(341, 356);
+            this.FilesToCopyTextBox.TabIndex = 5;
+            // 
             // FilesCopiedTextBox
             // 
-            this.FilesCopiedTextBox.Location = new System.Drawing.Point(12, 106);
+            this.FilesCopiedTextBox.Location = new System.Drawing.Point(373, 189);
             this.FilesCopiedTextBox.Multiline = true;
             this.FilesCopiedTextBox.Name = "FilesCopiedTextBox";
             this.FilesCopiedTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.FilesCopiedTextBox.Size = new System.Drawing.Size(756, 439);
+            this.FilesCopiedTextBox.Size = new System.Drawing.Size(395, 356);
             this.FilesCopiedTextBox.TabIndex = 5;
             // 
             // StartCopyDirectory
@@ -101,6 +125,24 @@ namespace CopyDirectory
             this.SelectSourceDirectoryButton.UseVisualStyleBackColor = true;
             this.SelectSourceDirectoryButton.Click += new System.EventHandler(this.SelectSourceDirectoryButton_Click);
             // 
+            // ToCopyLabel
+            // 
+            this.ToCopyLabel.AutoSize = true;
+            this.ToCopyLabel.Location = new System.Drawing.Point(12, 165);
+            this.ToCopyLabel.Name = "ToCopyLabel";
+            this.ToCopyLabel.Size = new System.Drawing.Size(65, 21);
+            this.ToCopyLabel.TabIndex = 6;
+            this.ToCopyLabel.Text = "To Copy";
+            // 
+            // ProgressPercentLabel
+            // 
+            this.ProgressPercentLabel.AutoSize = true;
+            this.ProgressPercentLabel.Location = new System.Drawing.Point(400, 95);
+            this.ProgressPercentLabel.Name = "ProgressPercentLabel";
+            this.ProgressPercentLabel.Size = new System.Drawing.Size(32, 21);
+            this.ProgressPercentLabel.TabIndex = 8;
+            this.ProgressPercentLabel.Text = "0%";
+            // 
             // CopyDirectory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -128,6 +170,10 @@ namespace CopyDirectory
         private System.Windows.Forms.Button StartCopyDirectory;
         private System.Windows.Forms.Label FilesCopiedLabel;
         private System.Windows.Forms.TextBox FilesCopiedTextBox;
+        private System.Windows.Forms.ProgressBar FileTransferProgressBar;
+        private System.Windows.Forms.TextBox FilesToCopyTextBox;
+        private System.Windows.Forms.Label ProgressPercentLabel;
+        private System.Windows.Forms.Label ToCopyLabel;
     }
 }
 

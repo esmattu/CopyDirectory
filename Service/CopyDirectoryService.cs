@@ -11,7 +11,7 @@ namespace CopyDirectory.Service
     class CopyDirectoryService
     {
         //Use the event handler to return the process of the file transfer progress
-        public event EventHandler<string[]> FileTransferEvent;
+        public event EventHandler<FileTranserInfo> FileTransferEvent;
 
         /// <summary>
         /// Set both to private to avoid them being overwritten by another class
@@ -54,12 +54,6 @@ namespace CopyDirectory.Service
                 CopyFilesToTartGet(folder.FullName, TargetPath);
                 
             }
-
-            //grab al the files transferred over.
-            string[] targetSourceContentsArray = Directory.GetFiles(TargetPath, "*.*", SearchOption.AllDirectories);
-
-            //This to what ever class is listening to the event
-            FileTransferEvent?.Invoke(this, targetSourceContentsArray);
 
             //return false by default
             return true;
@@ -106,6 +100,17 @@ namespace CopyDirectory.Service
 
             //once there are no directories to files to copy is should return true
             return true;
+
+        }
+
+        private void SendEvent(string sourceFile, string targetFile)
+        {
+
+            int tartgetCount = Directory.GetFiles(TargetPath, "*.*", SearchOption.AllDirectories).Length;
+
+            FileTranserInfo fileTranserInfo = new(sourceFile, targetFile, tartgetCount);
+
+            FileTransferEvent?.Invoke(this, fileTranserInfo);
 
         }
 

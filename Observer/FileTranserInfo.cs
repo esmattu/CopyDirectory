@@ -6,15 +6,19 @@ namespace CopyDirectory.Observer
     public struct FileTranserInfo
     {
 
-/*        private List<string> fileCopied = new List<string>();
+        private string _fileCopied;
+        private string _fileToCopy;
+        private int _copiedCount;
                 
-        public FileTranserInfo(string fileCopied)
+        public FileTranserInfo(string fileCopied, string fileToCopy, int copiedCount)
         {
-            
-
+            _fileCopied = fileCopied;
+            _fileToCopy = fileToCopy;
+            _copiedCount = copiedCount;
         }
 
-        public List<string> FileCopied { get { return fileCopied; }  }*/
-
+        public string FileCopied { get { return _fileCopied; } }
+        public string FileToCopy { get { return _fileToCopy; } }
+        public int CopiedCount{ get { return _copiedCount; } }
     }
 }
