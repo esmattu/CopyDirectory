@@ -12,6 +12,7 @@ namespace CopyDirectory.Observer
 
         List<IObserver<FileTranserInfo>> observers;
 
+        public FileTranserInfo transerInfo; 
 
         public FileTransferMonitor()
         {
@@ -45,6 +46,13 @@ namespace CopyDirectory.Observer
             }
             return new Unsubscriber(observers, observer);
         }
+
+        public void ItemCopied()
+        {
+
+        }
+
+
         
     }
 }

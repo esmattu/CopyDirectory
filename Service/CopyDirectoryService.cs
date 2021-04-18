@@ -10,7 +10,7 @@ namespace CopyDirectory.Service
     class CopyDirectoryService
     {
 
-        
+
         /// <summary>
         /// Set both to private to avoid them being overwritten by another class
         /// </summary>
@@ -19,7 +19,7 @@ namespace CopyDirectory.Service
         private string TargetPath { get; set; }
 
         //we need to know the current Directory.
-/*        private string CurrentDirectoryPath { get; set; }*/
+        /*        private string CurrentDirectoryPath { get; set; }*/
 
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace CopyDirectory.Service
         public Boolean StartCopy()
         {
             Boolean success = false;
-            
+
             //Create an string of all the directories in the sourcePath.
             DirectoryInfo sourceDireactory = new DirectoryInfo(SourcePath);
 
@@ -49,7 +49,7 @@ namespace CopyDirectory.Service
             foreach (DirectoryInfo folder in directories)
             {
                 //call the recursive function to copy the files and create the folders.
-                CopyFilesToTartGet(folder.FullName, TargetPath);
+                copyFilesToTartGet(folder.FullName, TargetPath);
 
             }
 
@@ -62,7 +62,7 @@ namespace CopyDirectory.Service
         /// If there a no more files or directories to loop return true.
         /// </summary>
         /// <param name="directoryPath"></param>
-        private Boolean CopyFilesToTartGet(string currentDirectoryPath, string targetPath)
+        private Boolean copyFilesToTartGet(string currentDirectoryPath, string targetPath)
         {
 
             //update what directory we are looking at and the deatils for that folder
@@ -83,7 +83,7 @@ namespace CopyDirectory.Service
                 //merge the currentDirectry and the file current file name.
                 string tempPath = Path.Combine(targetPath, filePath.Name);
                 //Don't overwite if it exisits
-                filePath.CopyTo(tempPath, false);
+                filePath.CopyTo(tempPath, true);
             }
 
             //Try loop through any directories in the current folder.
@@ -92,7 +92,7 @@ namespace CopyDirectory.Service
 
                 //we found a new folder, we need to update the targetPath with new folder name so it can be created.
                 string tempPath = Path.Combine(targetPath, folder.Name);
-                CopyFilesToTartGet(folder.FullName, tempPath);
+                copyFilesToTartGet(folder.FullName, tempPath);
             }
 
             //once there are no directories to files to copy is should return true
