@@ -18,9 +18,7 @@ namespace CopyDirectory.Service
 
         private string TargetPath { get; set; }
 
-        //we need to know the current Directory.
-        /*        private string CurrentDirectoryPath { get; set; }*/
-
+        private int FileFolderCount { get; set; }
 
         /// <summary>
         /// Class constructor requires that sourcePath and targetPath has been added when the class object is created.
@@ -39,6 +37,8 @@ namespace CopyDirectory.Service
         public bool StartCopy()
         {
 
+            //Get get a count what is to be transffered.
+            FileFolderCount = Directory.GetFiles("path/to/dir", "*.*", SearchOption.AllDirectories).Length;
 
             //Create an string of all the directories in the sourcePath.
             DirectoryInfo sourceDireactory = new(SourcePath);
@@ -97,6 +97,11 @@ namespace CopyDirectory.Service
 
             //once there are no directories to files to copy is should return true
             return true;
+
+        }
+
+        private void updateTranseferEvent(string fileTransferred)
+        {
 
         }
 
