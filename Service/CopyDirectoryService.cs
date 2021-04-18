@@ -38,7 +38,7 @@ namespace CopyDirectory.Service
         /// <returns></returns>
         public bool StartCopy()
         {
-            bool success = false;
+
 
             //Create an string of all the directories in the sourcePath.
             DirectoryInfo sourceDireactory = new(SourcePath);
@@ -54,7 +54,7 @@ namespace CopyDirectory.Service
             }
 
             //return false by default
-            return success;
+            return true;
         }
 
         /// <summary>
