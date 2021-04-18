@@ -77,9 +77,9 @@ namespace CopyDirectory
 
             float currentPercentage = (SourceFileFolderCount / e.CopiedCount) * 100 ;
             FileTransferProgressBar.Value = e.CopiedCount;
-            FileTransferProgressBar.
+            
             ProgressPercentLabel.Text = currentPercentage+"%";
-
+            
         }
 
 

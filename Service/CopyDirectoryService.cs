@@ -39,8 +39,8 @@ namespace CopyDirectory.Service
         public bool StartCopy()
         {
 
-            //Get get a count what is to be transffered.
-            SourceFileFolderCount = Directory.GetFiles(SourcePath, "*.*", SearchOption.AllDirectories).Length;
+            //Reset file counter
+            SourceFileFolderCount = 0;
 
             //Create an string of all the directories in the sourcePath.
             DirectoryInfo sourceDireactory = new(SourcePath);
@@ -49,7 +49,7 @@ namespace CopyDirectory.Service
 
             //Loop through the array passing the current folder being looked and the targetPath to be updated.
             foreach (DirectoryInfo folder in directories)
-            {
+            {   
                 //call the recursive function to copy the files and create the folders.
                 CopyFilesToTartGet(folder.FullName, TargetPath);
                 
@@ -89,7 +89,10 @@ namespace CopyDirectory.Service
                 filePath.CopyTo(tempPath, true);
 
                 //update the UI with the file that has been transferred.
-                SendEvent(filePath.FullName, tempPath);
+                SourceFileFolderCount++;
+                FileTranserInfo fileTranserInfo = new(filePath.FullName, tempPath, SourceFileFolderCount);
+                FileTransferEvent?.Invoke(this, fileTranserInfo);
+                
             }
 
             //Try loop through any directories in the current folder.
@@ -106,15 +109,6 @@ namespace CopyDirectory.Service
 
         }
 
-        private void SendEvent(string sourceFile, string targetFile)
-        {
-            int tartgetCount = Directory.GetFiles(TargetPath, "*.*", SearchOption.AllDirectories).Length;
-
-            FileTranserInfo fileTranserInfo = new(sourceFile, targetFile, tartgetCount);
-
-            FileTransferEvent?.Invoke(this, fileTranserInfo);
-
-        }
 
 
     }
