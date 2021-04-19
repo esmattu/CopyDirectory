@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CopyDirectory.Service;
-using System.IO;
+
 
 namespace CopyDirectory
 {
@@ -16,11 +16,21 @@ namespace CopyDirectory
 
     public partial class CopyDirectory : Form
     {
+
+        private BackgroundWorker backgroundworkerCopyDirectory;
+        
+        
         public CopyDirectory()
         {
             InitializeComponent();
+            backgroundworkerCopyDirectory = new BackgroundWorker();
+            backgroundworkerCopyDirectory.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerCopyDirectory_DoWork);
+            backgroundworkerCopyDirectory.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerCopyDirectory_RunWorkerCompleted);
+
+
             
         }
+
 
         public string SourceFolder { get; set; }
         public string TargetFolder { get; set; }
@@ -52,14 +62,9 @@ namespace CopyDirectory
             FilesToCopyTextBox.Text = null;
             FilesCopiedTextBox.Text = null;
 
-            int sourceCount = Directory.GetFiles(SourceFolder, "*.*", SearchOption.AllDirectories).Length;
-            SourceFileFolderCount = sourceCount;
-            FileTransferProgressBar.Maximum = sourceCount;
+            //run copyDirectory service as background task.
 
-            CopyDirectoryService copyDirectory = new(SourceFolder, TargetFolder);
-            copyDirectory.FileTransferEvent += CopyDirectory_FileTransferEvent;
 
-            var result = copyDirectory.StartCopy();
 
         }
 
@@ -75,16 +80,27 @@ namespace CopyDirectory
 
             //calulate percentage, update percentage label
 
-            float currentPercentage = (SourceFileFolderCount / e.CopiedCount) * 100 ;
+            float currentPercentage = (e.SourceCount / e.CopiedCount) * 100 ;
             FileTransferProgressBar.Value = e.CopiedCount;
             
             ProgressPercentLabel.Text = currentPercentage+"%";
             
         }
 
+        private void backgroundWorkerCopyDirectory_DoWork(object sender, DoWorkEventArgs e)
+        {
+            CopyDirectoryService copyDirectory = new(SourceFolder, TargetFolder);
+            copyDirectory.FileTransferEvent += CopyDirectory_FileTransferEvent;
 
 
+            var result = copyDirectory.StartCopy();
+        }
 
+
+        private void backgroundWorkerCopyDirectory_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
