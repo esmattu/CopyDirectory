@@ -38,26 +38,39 @@ namespace CopyDirectory.Service
         /// <returns></returns>
         public bool StartCopy()
         {
-
             //Get get a count what is to be transffered.
-            SourceFileFolderCount = Directory.GetFiles(SourcePath, "*.*", SearchOption.AllDirectories).Length;
+            
 
             //Create an string of all the directories in the sourcePath.
             DirectoryInfo sourceDireactory = new(SourcePath);
 
             DirectoryInfo[] directories = sourceDireactory.GetDirectories();
 
-            //Loop through the array passing the current folder being looked and the targetPath to be updated.
-            foreach (DirectoryInfo folder in directories)
-            {
-                //call the recursive function to copy the files and create the folders.
-                
-                CopyFilesToTarget(folder.FullName, TargetPath);
-                
-            }
+            /*            //Loop through the array passing the current folder being looked and the targetPath to be updated.
+                        foreach (DirectoryInfo folder in directories)
+                        {
+
+                            //we need to check if the folder exists, if not create it
+                            string tempPath = Path.Combine(folder.FullName, TargetPath);
+                            if (!Directory.Exists(tempPath))
+                            {
+                                Directory.CreateDirectory(tempPath);
+                            }
+                            //call the recursive function to copy the files and create the folders.
+
+
+                        }*/
 
             //return false by default
-            return true;
+
+            var resutls  = CopyFilesToTarget(SourcePath, TargetPath);
+
+            if(resutls == true)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -70,8 +83,6 @@ namespace CopyDirectory.Service
 
             //update what directory we are looking at and the deatils for that folder
             DirectoryInfo currentDirectory = new(currentDirectoryPath);
-
-
 
             //Get all the subDirectories, if any in the current Directory as array of DirectoryInfo
             DirectoryInfo[] subDirectories = currentDirectory.GetDirectories();
