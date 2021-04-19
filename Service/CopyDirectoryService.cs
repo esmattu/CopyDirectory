@@ -46,22 +46,7 @@ namespace CopyDirectory.Service
 
             DirectoryInfo[] directories = sourceDireactory.GetDirectories();
 
-            /*            //Loop through the array passing the current folder being looked and the targetPath to be updated.
-                        foreach (DirectoryInfo folder in directories)
-                        {
 
-                            //we need to check if the folder exists, if not create it
-                            string tempPath = Path.Combine(folder.FullName, TargetPath);
-                            if (!Directory.Exists(tempPath))
-                            {
-                                Directory.CreateDirectory(tempPath);
-                            }
-                            //call the recursive function to copy the files and create the folders.
-
-
-                        }*/
-
-            //return false by default
 
             var resutls  = CopyFilesToTarget(SourcePath, TargetPath);
 
