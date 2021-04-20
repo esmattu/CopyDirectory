@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using CopyDirectory.Observer;
 
 namespace CopyDirectory.Service
 {
     class CopyDirectoryService
     {
         //Use the event handler to return the process of the file transfer progress
-        public event EventHandler<FileTranserInfo> FileTransferEvent;
+        public delegate void FileTransferProgressUpdate(string sourceFile, string copiedFile, int scourceCount, int targetCount);
+        public event FileTransferProgressUpdate OnFileTransferProgressUpdate;
 
         /// <summary>
         /// Set both to private to avoid them being overwritten by another class
@@ -22,40 +22,28 @@ namespace CopyDirectory.Service
 
         public int SourceFileFolderCount { get; set; }
 
-        /// <summary>
-        /// Class constructor requires that sourcePath and targetPath has been added when the class object is created.
-        /// </summary>
-        /// <param name="sourcePath"></param>
-        /// <param name="targetPath"></param>
-        public CopyDirectoryService(string sourcePath, string targetPath)
+        public CopyDirectoryService()
         {
-            SourcePath = sourcePath;
-            TargetPath = targetPath;
+            //Nothing required
         }
+
         /// <summary>
         /// This method will be used to the start the copy process
         /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="targetPath"></param>
         /// <returns></returns>
-        public bool StartCopy()
+        public bool StartCopy(string sourcePath, string targetPath)
         {
-            //Get get a count what is to be transffered.
+
+            SourcePath = sourcePath;
+            TargetPath = targetPath;
+
+            SourceFileFolderCount = Directory.GetFiles(SourcePath, "*.*", SearchOption.AllDirectories).Length;
+
+            CopyFilesToTarget(SourcePath, TargetPath);
             
-
-            //Create an string of all the directories in the sourcePath.
-            DirectoryInfo sourceDireactory = new(SourcePath);
-
-            DirectoryInfo[] directories = sourceDireactory.GetDirectories();
-
-
-
-            var resutls  = CopyFilesToTarget(SourcePath, TargetPath);
-
-            if(resutls == true)
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -87,8 +75,7 @@ namespace CopyDirectory.Service
 
                 //update the UI with the file that has been transferred.
                 int tartgetCount = Directory.GetFiles(TargetPath, "*.*", SearchOption.AllDirectories).Length;
-                FileTranserInfo fileTranserInfo = new(filePath.FullName, tempPath, tartgetCount);
-                FileTransferEvent?.Invoke(this, fileTranserInfo);
+                OnFileTransferProgressUpdate(filePath.FullName, tempPath, SourceFileFolderCount, tartgetCount);
                 
             }
 

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace CopyDirectory.Observer
+namespace CopyDirectory.Service
 
 {
-    public struct FileTranserInfo
+    public class  FileTranserInfo<T>
     {
 
         private string _fileCopied;
