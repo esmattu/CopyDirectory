@@ -108,7 +108,7 @@ namespace CopyDirectory
             }
             else
             {
-                MessageBox.Show("It fucking failed!!!!!");
+                MessageBox.Show("It failed!!!!!");
             }
 
             SelectSourceDirectoryButton.Enabled = true;
